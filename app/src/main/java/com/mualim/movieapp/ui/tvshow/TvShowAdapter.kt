@@ -1,25 +1,32 @@
-package com.mualim.movieapp.tvshow
+package com.mualim.movieapp.ui.tvshow
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.mualim.movieapp.R
+import com.mualim.movieapp.callback.OnItemTvCallback
 import com.mualim.movieapp.callback.TvShowFragmentCallback
 import com.mualim.movieapp.data.TvShowEntity
 import com.mualim.movieapp.databinding.ItemsTvshowBinding
-import com.mualim.movieapp.detail.DetailActivity
 
 class TvShowAdapter(private val callback: TvShowFragmentCallback) : RecyclerView.Adapter<TvShowAdapter.MovieViewHolder>() {
 
     private val listTvShows = ArrayList<TvShowEntity>()
 
+    private var onItemTvCallback: OnItemTvCallback? = null
+
+    fun setOnItemTvCallback(onItemTvCallback: OnItemTvCallback) {
+        this.onItemTvCallback = onItemTvCallback
+    }
+
     fun setTvShow(tvShows: List<TvShowEntity>?) {
         if (tvShows == null) return
         this.listTvShows.clear()
         this.listTvShows.addAll(tvShows)
+
+        this.notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -42,16 +49,12 @@ class TvShowAdapter(private val callback: TvShowFragmentCallback) : RecyclerView
                 textTitle.text = tvShow.title
                 textRelease.text = tvShow.release
                 Glide.with(itemView.context)
-                        .load(tvShow.img)
+                        .load(tvShow.poster_path)
                         .apply(RequestOptions.placeholderOf(R.drawable.ic_loading))
                         .error(R.drawable.ic_error)
                         .into(imgPoster)
 
-                itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, DetailActivity::class.java)
-                    intent.putExtra(DetailActivity.EXTRA_TV_SHOW, tvShow.id)
-                    itemView.context.startActivity(intent)
-                }
+                itemView.setOnClickListener { onItemTvCallback?.onItemClicked(tvShow) }
                 imgShare.setOnClickListener { callback.onShareClick(tvShow) }
             }
         }

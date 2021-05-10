@@ -12,14 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieApp">
         <activity
-            android:name=".detail.DetailActivity"
+            android:name="com.mualim.ui.detail.DetailActivity"
             android:label="Detail Activity"
             android:theme="@style/Theme.MovieApp.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".home.HomeActivity"/>
+                android:value="com.mualim.movieapp.ui.home.HomeActivity"/>
         </activity>
-        <activity android:name=".home.HomeActivity">
+        <activity android:name="com.mualim.movieapp.ui.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
