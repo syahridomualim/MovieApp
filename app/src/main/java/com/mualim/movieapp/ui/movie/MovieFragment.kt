@@ -1,5 +1,6 @@
-package com.mualim.movieapp.movie
+package com.mualim.movieapp.ui.movie
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mualim.movieapp.callback.MovieFragmentCallback
+import com.mualim.movieapp.callback.OnItemMovieCallback
 import com.mualim.movieapp.data.MovieEntity
 import com.mualim.movieapp.databinding.FragmentMovieBinding
+import com.mualim.movieapp.viewmodel.ViewModelFactory
+import com.mualim.movieapp.detail.DetailActivity
 
 
 class MovieFragment : Fragment(), MovieFragmentCallback {
@@ -29,16 +33,32 @@ class MovieFragment : Fragment(), MovieFragmentCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            val vieModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MovieViewModel::class.java]
-            val movies = vieModel.getMovies()
+
+            val factory = ViewModelFactory.getInstance(requireActivity())
+            val vieModel = ViewModelProvider(this, factory)[MovieViewModel::class.java]
 
             val movieAdapter = MovieAdapter(this)
-            movieAdapter.setMovies(movies)
 
+            fragmentMovieBinding.progressBar.visibility = View.VISIBLE
+            vieModel.getMovies().observe(viewLifecycleOwner, { movies ->
+                fragmentMovieBinding.progressBar.visibility = View.GONE
+                movieAdapter.setMovies(movies)
+
+                movieAdapter.notifyDataSetChanged()
+            })
+
+            movieAdapter.setOnItemMovieClickCallback(object : OnItemMovieCallback {
+                override fun onItemClicked(movie: MovieEntity) {
+                    val intent = Intent(context, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.EXTRA_MOVIE, movie.id)
+                    startActivity(intent)
+                }
+
+            })
             with(fragmentMovieBinding.rvMovie) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
-                adapter = movieAdapter
+                this.adapter = movieAdapter
             }
         }
     }
@@ -47,11 +67,11 @@ class MovieFragment : Fragment(), MovieFragmentCallback {
         if (activity != null) {
             val mimeType = "text/plain"
             ShareCompat.IntentBuilder
-                    .from(requireActivity())
-                    .setType(mimeType)
-                    .setChooserTitle("Bagikan aplikasi imi sekarang.")
-                    .setText(movie.title)
-                    .startChooser()
+                .from(requireActivity())
+                .setType(mimeType)
+                .setChooserTitle("Bagikan aplikasi imi sekarang.")
+                .setText(movie.title)
+                .startChooser()
         }
     }
 }
