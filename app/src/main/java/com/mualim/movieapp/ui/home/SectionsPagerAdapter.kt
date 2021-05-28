@@ -1,12 +1,12 @@
-package com.mualim.movieapp.home
+package com.mualim.movieapp.ui.home
 
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.mualim.movieapp.R
-import com.mualim.movieapp.movie.MovieFragment
-import com.mualim.movieapp.tvshow.TvShowFragment
+import com.mualim.movieapp.ui.movie.MovieFragment
+import com.mualim.movieapp.ui.tvshow.TvShowFragment
 
 class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 

@@ -1,4 +1,4 @@
-package com.mualim.movieapp.home
+package com.mualim.movieapp.ui.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

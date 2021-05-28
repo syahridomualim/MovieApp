@@ -1,5 +1,6 @@
-package com.mualim.movieapp.tvshow
+package com.mualim.movieapp.ui.tvshow
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,11 +9,13 @@ import android.view.ViewGroup
 import androidx.core.app.ShareCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mualim.movieapp.R
+import com.mualim.movieapp.callback.OnItemTvCallback
 import com.mualim.movieapp.callback.TvShowFragmentCallback
 import com.mualim.movieapp.data.TvShowEntity
 import com.mualim.movieapp.databinding.FragmentTvShowBinding
-import com.mualim.movieapp.utils.DataDummy
+import com.mualim.ui.detail.DetailActivity
+import com.mualim.movieapp.viewmodel.ViewModelFactory
+import com.mualim.ui.tvshow.TvShowViewModel
 
 class TvShowFragment : Fragment(), TvShowFragmentCallback {
 
@@ -30,10 +33,27 @@ class TvShowFragment : Fragment(), TvShowFragmentCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[TvShowViewModel::class.java]
-            val tvShows = viewModel.getTvShows()
+
+            val factory = ViewModelFactory.getInstance(requireActivity())
+            val viewModel = ViewModelProvider(this, factory)[TvShowViewModel::class.java]
+
             val tvShowAdapter = TvShowAdapter(this)
-            tvShowAdapter.setTvShow(tvShows)
+
+            tvShowBinding.progressBar.visibility = View.VISIBLE
+            viewModel.getTvShows().observe(viewLifecycleOwner, { tvShows ->
+                tvShowBinding.progressBar.visibility = View.GONE
+                tvShowAdapter.setTvShow(tvShows)
+                tvShowAdapter.notifyDataSetChanged()
+            })
+
+            tvShowAdapter.setOnItemTvCallback(object : OnItemTvCallback {
+                override fun onItemClicked(tvShow: TvShowEntity) {
+                    val intent = Intent(context, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.EXTRA_TV_SHOW, tvShow.id)
+                    context?.startActivity(intent)
+                }
+
+            })
 
             with(tvShowBinding.rvTvShow) {
                 layoutManager = LinearLayoutManager(context)

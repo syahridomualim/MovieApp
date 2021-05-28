@@ -8,4 +8,6 @@
     <string name="duration">Duration</string>
     <string name="user_score">User Score:</string>
     <string name="overview">Overview</string>
+    <string name="user_score_desc">%s</string>
+    <string name="release_desc">(%s)</string>
 </resources>
