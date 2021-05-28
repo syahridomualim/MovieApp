@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.mualim.movieapp.data.source.DataRepository
-import com.mualim.movieapp.detail.DetailViewModel
+import com.mualim.ui.detail.DetailViewModel
 import com.mualim.movieapp.di.Injection
 import com.mualim.movieapp.ui.movie.MovieViewModel
 import com.mualim.ui.tvshow.TvShowViewModel

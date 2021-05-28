@@ -1,4 +1,4 @@
-package com.mualim.movieapp.detail
+package com.mualim.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

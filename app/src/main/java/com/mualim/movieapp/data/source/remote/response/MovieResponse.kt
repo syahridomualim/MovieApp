@@ -1,6 +1,7 @@
 package com.mualim.movieapp.data.source.remote.response
 
 import android.os.Parcelable
+import com.google.gson.JsonArray
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

@@ -6,7 +6,6 @@ import androidx.lifecycle.Observer
 import com.mualim.movieapp.data.MovieEntity
 import com.mualim.movieapp.data.TvShowEntity
 import com.mualim.movieapp.data.source.DataRepository
-import com.mualim.movieapp.detail.DetailViewModel
 import com.mualim.movieapp.utils.DataDummy
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull

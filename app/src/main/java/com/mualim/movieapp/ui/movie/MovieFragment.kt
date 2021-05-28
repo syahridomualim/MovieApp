@@ -14,7 +14,7 @@ import com.mualim.movieapp.callback.OnItemMovieCallback
 import com.mualim.movieapp.data.MovieEntity
 import com.mualim.movieapp.databinding.FragmentMovieBinding
 import com.mualim.movieapp.viewmodel.ViewModelFactory
-import com.mualim.movieapp.detail.DetailActivity
+import com.mualim.ui.detail.DetailActivity
 
 
 class MovieFragment : Fragment(), MovieFragmentCallback {

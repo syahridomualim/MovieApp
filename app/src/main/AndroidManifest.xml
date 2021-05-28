@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieApp">
         <activity
-            android:name=".detail.DetailActivity"
+            android:name="com.mualim.ui.detail.DetailActivity"
             android:label="Detail Activity"
             android:theme="@style/Theme.MovieApp.NoActionBar" >
             <meta-data

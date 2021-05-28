@@ -13,7 +13,7 @@ import com.mualim.movieapp.callback.OnItemTvCallback
 import com.mualim.movieapp.callback.TvShowFragmentCallback
 import com.mualim.movieapp.data.TvShowEntity
 import com.mualim.movieapp.databinding.FragmentTvShowBinding
-import com.mualim.movieapp.detail.DetailActivity
+import com.mualim.ui.detail.DetailActivity
 import com.mualim.movieapp.viewmodel.ViewModelFactory
 import com.mualim.ui.tvshow.TvShowViewModel
 
